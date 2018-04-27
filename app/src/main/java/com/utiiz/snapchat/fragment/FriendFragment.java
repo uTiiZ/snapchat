@@ -41,6 +41,7 @@ public class FriendFragment extends Fragment {
     public LinearLayout mLinearLayout;
     @NonNull @BindView(R.id.nested_scroll_view) public NestedScrollView mNestedScrollView;
     @NonNull @BindView(R.id.recycler_view) public RecyclerView mRecyclerView;
+    @NonNull @BindView(R.id.snap_stun) public View mSnapStun;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +50,9 @@ public class FriendFragment extends Fragment {
         ButterKnife.bind(this, mLinearLayout);
 
         mNestedScrollView.setPadding(0, mNestedScrollView.getPaddingTop() + Snapchat.getStatusBarHeight(getContext()), 0, 0);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mSnapStun.getLayoutParams();
+        params.setMargins(0, params.topMargin + Snapchat.getStatusBarHeight(getContext()), 0, 0);
+        mSnapStun.setLayoutParams(params);
 
         List<String> stringList = new ArrayList<>();
         stringList.add("Hello");

@@ -10,6 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/snap_stun"
+            android:layout_gravity="center|top"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:background="@drawable/ic_snap_stun"/>
+
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
@@ -25,13 +33,6 @@
                 android:background="@drawable/shape_recycler_view">
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.NestedScrollView>
-
-        <View
-            android:layout_gravity="center|top"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:paddingTop="?android:attr/actionBarSize"
-            android:background="@drawable/ic_snap_stun"/>
 
     </FrameLayout>
 
