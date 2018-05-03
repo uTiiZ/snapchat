@@ -1,5 +1,8 @@
 package com.utiiz.snapchat.fragment;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.utiiz.snapchat.R;
+import com.utiiz.snapchat.activity.MainActivity;
 import com.utiiz.snapchat.adapter.NestedScrollViewOverScrollDecorAdapter;
 import com.utiiz.snapchat.adapter.StringAdapter;
 import com.utiiz.snapchat.helper.Snapchat;
@@ -141,8 +145,8 @@ public class FriendFragment extends Fragment {
                         canBounceBack[0] = (offset * 0.5F >= mSnap.getHeight() * 0.33F) ? true : false;
 
                         if (offset <= mSnap.getHeight()) {
-                            if (mSnap.getBackground().getConstantState() != getResources().getDrawable(R.drawable.ic_ghost, null).getConstantState())
-                                mSnap.setBackground(getResources().getDrawable(R.drawable.ic_ghost, null));
+                            if (mSnap.getBackground().getConstantState() != getResources().getDrawable(R.drawable.ic_ghost_no_expression, null).getConstantState())
+                                mSnap.setBackground(getResources().getDrawable(R.drawable.ic_ghost_no_expression, null));
                             mSnap.animate()
                                     .y(mNestedScrollView.getPaddingTop() + (offset * 0.5F))
                                     .setDuration(0)
@@ -154,7 +158,7 @@ public class FriendFragment extends Fragment {
                                     .start();
 
                             mHands.animate()
-                                    .y(mNestedScrollView.getPaddingTop() + Snapchat.DPToPixel(5F, getContext()) + (offset * 0.8F))
+                                    .y(mNestedScrollView.getPaddingTop() + Snapchat.DPToPixel(2F, getContext()) + (offset * 0.855F))
                                     .setDuration(0)
                                     .start();
                         } else {
@@ -171,7 +175,7 @@ public class FriendFragment extends Fragment {
                                     .start();
 
                             mHands.animate()
-                                    .y(mNestedScrollView.getPaddingTop() + Snapchat.DPToPixel(25F, getContext()) + (offset) - (mSnap.getHeight() * 0.5F))
+                                    .y(mNestedScrollView.getPaddingTop() + Snapchat.DPToPixel(21F, getContext()) + (offset) - (mSnap.getHeight() * 0.5F))
                                     .setDuration(0)
                                     .start();
                         }

@@ -1,6 +1,7 @@
 package com.utiiz.snapchat.activity;
 
 import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArgbEvaluator argbEvaluator = new ArgbEvaluator();
     Integer[] COLORS = null;
+    public static ValueAnimator colorAnimation = new ValueAnimator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mViewPager.setCurrentItem(mMainPageIndex);
-
     }
 
 }
