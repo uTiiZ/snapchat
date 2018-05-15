@@ -4,6 +4,7 @@ package com.utiiz.snapchat.adapter;
  * Created by t.kervran on 16/06/2017.
  */
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -18,38 +19,44 @@ import android.support.v4.view.ViewPager;
  */
 public class FragmentAdapter extends FragmentPagerAdapter {
 
-    // -----------------------------------------------------------------------
-    //
-    // Constructors
-    //
-    // -----------------------------------------------------------------------
-    public FragmentAdapter(FragmentManager fragmentManager, Context context,
-                           List<Class<? extends Fragment>> pages) {
+    private List<Class<? extends Fragment>> mPages = new ArrayList<>();
+    private List<String> mTitles = new ArrayList<>();
+    private Context mContext;
+
+    public FragmentAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
-        mPagesClasses = pages;
         mContext = context;
     }
 
-    // -----------------------------------------------------------------------
-    //
-    // Fields
-    //
-    // -----------------------------------------------------------------------
-    private List<Class<? extends Fragment>> mPagesClasses;
-    private Context mContext;
-
-    // -----------------------------------------------------------------------
-    //
-    // Methods
-    //
-    // -----------------------------------------------------------------------
     @Override
     public Fragment getItem(int position) {
-        return Fragment.instantiate(mContext, mPagesClasses.get(position).getName());
+        return Fragment.instantiate(mContext, mPages.get(position).getName());
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTitles.get(position);
     }
 
     @Override
     public int getCount() {
-        return mPagesClasses.size();
+        return mPages.size();
+    }
+
+    public void add(Class<? extends Fragment> page, String title) {
+        mPages.add(page);
+        mTitles.add(title);
+    }
+
+    public int getPagesCount() {
+        return mPages.size();
+    }
+
+    public int indexOf(Class<? extends Fragment> page) {
+        return mPages.indexOf(page);
+    }
+
+    public String get(Integer position) {
+        return mTitles.get(position);
     }
 }

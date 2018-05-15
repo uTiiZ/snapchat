@@ -14,7 +14,9 @@ import android.view.View;
 import com.utiiz.snapchat.R;
 import com.utiiz.snapchat.adapter.FragmentAdapter;
 import com.utiiz.snapchat.fragment.CameraFragment;
+import com.utiiz.snapchat.fragment.DiscoverFragment;
 import com.utiiz.snapchat.fragment.FriendFragment;
+import com.utiiz.snapchat.fragment.RecyclerViewFragment;
 
 import java.util.ArrayList;
 
@@ -49,14 +51,16 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
-        ArrayList<Class<? extends Fragment>> pages = new ArrayList<>();
-        pages.add(FriendFragment.class);
-        pages.add(CameraFragment.class);
-        pages.add(FriendFragment.class);
-        Integer mMainPageIndex = 1; //pages.indexOf(FriendFragment.class);
-        final FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), getApplicationContext(), pages);
+        final FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), getApplicationContext());
+
+        adapter.add(FriendFragment.class, null);
+        adapter.add(CameraFragment.class, null);
+        adapter.add(DiscoverFragment.class, null);
+
+        Integer mMainPageIndex = adapter.indexOf(CameraFragment.class);
+
         mViewPager.setAdapter(adapter);
-        mViewPager.setOffscreenPageLimit(pages.size());
+        mViewPager.setOffscreenPageLimit(adapter.getPagesCount());
         //mHorizontalPager.setPageTransformer(false, new SnapPageTransformer());
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

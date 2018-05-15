@@ -2,7 +2,20 @@ package com.utiiz.snapchat.helper;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+
+import com.utiiz.snapchat.adapter.ChatAdapter;
+import com.utiiz.snapchat.interfaces.DiscoverInterface;
+import com.utiiz.snapchat.interfaces.FriendInterface;
+import com.utiiz.snapchat.model.Chat;
+
+import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
+import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Snapchat {
 
@@ -41,5 +54,66 @@ public class Snapchat {
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return dp;
+    }
+
+    /**
+     * This methods interpolate a value to another
+     *
+     * @param x An array of value
+     * @param y Another array of value
+     * @param z The value you want to interpolate
+     */
+
+    public static double interpolate(double[] x, double[] y, double z) {
+
+        LinearInterpolator linearInterpolator = new LinearInterpolator();
+        PolynomialSplineFunction f = linearInterpolator.interpolate(y, x);
+
+        double value = f.value(z);
+
+        return value;
+    }
+
+    public static void refreshDiscover(int position, RecyclerView mRecyclerView, ChatAdapter chatAdapter, Integer[] COLORS) {
+        List<Chat> newChatList = new ArrayList<>();
+
+        switch (position) {
+            case DiscoverInterface.POSITION_ALL :
+                for (int i = 0; i < 15; i++) {
+                    newChatList.add(new Chat("All", (i == 0 || i == 2 || i == 4 || i == 6) ? 250 : 300, COLORS[new Random().nextInt(COLORS.length)]));
+                }
+                break;
+            case DiscoverInterface.POSITION_SUBSCRIPTIONS:
+                for (int i = 0; i < 15; i++) {
+                    newChatList.add(new Chat("Subscriptions", (i == 0 || i == 2 || i == 4 || i == 6) ? 250 : 300, COLORS[new Random().nextInt(COLORS.length)]));
+                }
+                break;
+        }
+
+        chatAdapter.update(newChatList);
+        mRecyclerView.setAdapter(chatAdapter);
+        mRecyclerView.setLayoutFrozen(true);
+    }
+
+    public static void refreshFriends(int position, RecyclerView mRecyclerView, ChatAdapter chatAdapter) {
+        List<Chat> newChatList = new ArrayList<>();
+
+        for (int i = 0; i < 15; i++) {
+            switch (position) {
+                case FriendInterface.POSITION_GROUPS :
+                    newChatList.add(new Chat("Groups"));
+                    break;
+                case FriendInterface.POSITION_STORIES :
+                    newChatList.add(new Chat("Stories"));
+                    break;
+                case FriendInterface.POSITION_CHAT :
+                    newChatList.add(new Chat("Chat"));
+                    break;
+            }
+        }
+
+        chatAdapter.update(newChatList);
+        mRecyclerView.setAdapter(chatAdapter);
+        mRecyclerView.setLayoutFrozen(true);
     }
 }

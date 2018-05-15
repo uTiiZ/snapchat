@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:padding="2.5dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+                <RelativeLayout
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/shape_discover_icon"
+                    android:padding="8dp">
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </ImageView>
+                </RelativeLayout>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                android:padding="5dp"
+                android:background="@drawable/gradient_adapter_discover">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="il y a 1 h"
+                    android:textColor="@color/colorWhite"
+                    android:includeFontPadding="false"
+                    android:textSize="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Marc Fitt"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/colorWhite"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Story populaire"
+                    android:textColor="@color/colorWhite"
+                    android:includeFontPadding="false"
+                    android:textSize="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

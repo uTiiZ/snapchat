@@ -8,10 +8,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -24,17 +23,17 @@ import com.utiiz.snapchat.adapter.ChatAdapter;
 import com.utiiz.snapchat.adapter.FragmentAdapter;
 import com.utiiz.snapchat.adapter.NestedScrollViewOverScrollDecorAdapter;
 import com.utiiz.snapchat.helper.Snapchat;
-import com.utiiz.snapchat.interfaces.FriendInterface;
+import com.utiiz.snapchat.interfaces.DiscoverInterface;
 import com.utiiz.snapchat.model.Chat;
-import com.utiiz.snapchat.view.LineIndicator;
 import com.utiiz.snapchat.view.TabLayoutIndicator;
+import com.utiiz.snapchat.view.TriangleIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.didik.component.StickyNestedScrollView;
 import me.everything.android.ui.overscroll.IOverScrollDecor;
 import me.everything.android.ui.overscroll.IOverScrollUpdateListener;
 import me.everything.android.ui.overscroll.VerticalOverScrollBounceEffectDecorator;
@@ -46,7 +45,7 @@ import static me.everything.android.ui.overscroll.IOverScrollState.STATE_IDLE;
 import static me.everything.android.ui.overscroll.OverScrollBounceEffectDecoratorBase.DEFAULT_DECELERATE_FACTOR;
 import static me.everything.android.ui.overscroll.OverScrollBounceEffectDecoratorBase.DEFAULT_TOUCH_DRAG_MOVE_RATIO_BCK;
 
-public class FriendFragment extends Fragment {
+public class DiscoverFragment extends Fragment {
 
     public LinearLayout mLinearLayout;
     @NonNull @BindView(R.id.nested_scroll_view) public NestedScrollView mNestedScrollView;
@@ -57,23 +56,22 @@ public class FriendFragment extends Fragment {
     @NonNull @BindView(R.id.hands) public View mHands;
     @NonNull @BindView(R.id.rainbow) public View mRainbow;
 
+    Integer[] COLORS = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_friend, container, false);
+        mLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_discover, container, false);
         ButterKnife.bind(this, mLinearLayout);
 
-        LineIndicator lineIndicator = new LineIndicator(mTabLayout);
-        lineIndicator.setContext(getContext());
+        COLORS = new Integer[] {getContext().getColor(R.color.colorPrimaryBlue), getContext().getColor(R.color.colorPrimaryRed)};
 
-        mTabLayout.setAnimatedIndicator(lineIndicator);
+        TriangleIndicator triangleIndicator = new TriangleIndicator(mTabLayout);
+        triangleIndicator.setContext(getContext());
+
+        mTabLayout.setAnimatedIndicator(triangleIndicator);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabTextColors(Color.parseColor("#BBFFFFFF"), Color.parseColor("#FFFFFFFF"));
-
-        TypedValue tv = new TypedValue();
-        int actionBarHeight = 0;
-        if (getActivity().getTheme().resolveAttribute(R.attr.actionBarSize, tv, true))
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
 
         final ViewTreeObserver observer = mTabLayout.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -102,44 +100,34 @@ public class FriendFragment extends Fragment {
             }
         });
 
+        mRecyclerView.setPadding((int) Snapchat.DPToPixel(2.5F, getContext()),
+                (int) Snapchat.DPToPixel(2.5F, getContext()),
+                (int) Snapchat.DPToPixel(2.5F, getContext()),
+                (int) Snapchat.DPToPixel(2.5F, getContext()));
 
         final List<Chat> chatList = new ArrayList<>();
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
-        chatList.add(new Chat("Chat"));
+        for (int i = 0; i < 15; i++) {
+            chatList.add(new Chat("All", (i == 0 || i == 2 || i == 4 || i == 6) ? 250 : 300, COLORS[new Random().nextInt(COLORS.length)]));
+        }
 
         final ChatAdapter chatAdapter = new ChatAdapter(chatList);
         mRecyclerView.setAdapter(chatAdapter);
         mRecyclerView.setLayoutFrozen(true);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         /*mTabLayout.addTab(mTabLayout.newTab().setText("Groups"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Stories"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Chat"));*/
         final FragmentAdapter adapter = new FragmentAdapter(getChildFragmentManager(), getContext());
 
-        adapter.add(RecyclerViewFragment.class, "Groups");
-        adapter.add(RecyclerViewFragment.class, "Stories");
-        adapter.add(RecyclerViewFragment.class, "Chat");
+        adapter.add(RecyclerViewFragment.class, "All");
+        adapter.add(RecyclerViewFragment.class, "Subscriptions");
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(adapter.getPagesCount());
-        mViewPager.setCurrentItem(FriendInterface.POSITION_CHAT);
-
-        mNestedScrollView.setFillViewport(true);
+        mViewPager.setCurrentItem(DiscoverInterface.POSITION_ALL);
 
         final VerticalOverScrollBounceEffectDecorator decorator = new VerticalOverScrollBounceEffectDecorator(new NestedScrollViewOverScrollDecorAdapter(mNestedScrollView), 2F, DEFAULT_TOUCH_DRAG_MOVE_RATIO_BCK, DEFAULT_DECELERATE_FACTOR);
 
@@ -240,7 +228,7 @@ public class FriendFragment extends Fragment {
                                     .setInterpolator(new DecelerateInterpolator())
                                     .start();
                             canBounceBack[0] = false;
-                            Snapchat.refreshFriends(mViewPager.getCurrentItem(), mRecyclerView, chatAdapter);
+                            Snapchat.refreshDiscover(mViewPager.getCurrentItem(), mRecyclerView, chatAdapter, COLORS);
                         }
 
                         break;
@@ -256,7 +244,7 @@ public class FriendFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                Snapchat.refreshFriends(position, mRecyclerView, chatAdapter);
+                Snapchat.refreshDiscover(position, mRecyclerView, chatAdapter, COLORS);
             }
 
             @Override
@@ -264,9 +252,8 @@ public class FriendFragment extends Fragment {
 
             }
         });
+
         return mLinearLayout;
     }
-
-
 
 }
