@@ -23,6 +23,7 @@ import com.utiiz.snapchat.R;
 import com.utiiz.snapchat.fragment.DiscoverFragment;
 import com.utiiz.snapchat.helper.Snapchat;
 import com.utiiz.snapchat.interfaces.ChatInterface;
+import com.utiiz.snapchat.interfaces.SnapchatInterface;
 import com.utiiz.snapchat.model.Chat;
 
 import java.io.FileNotFoundException;
@@ -105,7 +106,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
             Glide.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load("https://emojipedia-us.s3.amazonaws.com/thumbs/72/facebook/138/octopus_1f419.png")
+                    .load("https://emojipedia-us.s3.amazonaws.com/thumbs/72/facebook/138/" + SnapchatInterface.EMOJI[new Random().nextInt(SnapchatInterface.EMOJI.length)] + ".png")
                     .into(holder.ivIcon);
 
 
