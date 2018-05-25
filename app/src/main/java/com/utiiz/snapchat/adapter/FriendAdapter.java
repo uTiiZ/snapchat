@@ -58,7 +58,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         @Nullable @BindView(R.id.icon_friend) public ImageView ivIconFriend;
         @Nullable @BindView(R.id.line) public View vLine;
         @Nullable @BindView(R.id.stories) public ImageView vStories;
-        @Nullable @BindView(R.id.see_again) public ImageView vSeeAgain;
+        @Nullable @BindView(R.id.see_again) public View vSeeAgain;
 
         public FriendHolder(View view) {
             super(view);
