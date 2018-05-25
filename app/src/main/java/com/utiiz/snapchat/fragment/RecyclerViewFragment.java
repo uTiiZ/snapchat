@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.utiiz.snapchat.R;
-import com.utiiz.snapchat.adapter.ChatAdapter;
+import com.utiiz.snapchat.adapter.DiscoverAdapter;
 import com.utiiz.snapchat.model.Chat;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class RecyclerViewFragment extends Fragment {
         chatList.add(new Chat("Hello"));
         chatList.add(new Chat("World"));
 
-        final ChatAdapter chatAdapter = new ChatAdapter(chatList);
+        final DiscoverAdapter discoverAdapter = new DiscoverAdapter(chatList);
         /*mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutFrozen(true);
         mRecyclerView.setHasFixedSize(true);

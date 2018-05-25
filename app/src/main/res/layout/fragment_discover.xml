@@ -45,6 +45,7 @@
             app:tabSelectedTextColor="@color/colorWhite"
             app:tabTextAppearance="@style/mTabLayout"
             app:tabGravity="center"
+            android:layout_gravity="center|top"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed"/>
 
@@ -76,6 +77,19 @@
 
         </android.support.v4.widget.NestedScrollView>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradient_discover"/>
+
+        <View
+            android:id="@+id/gradient_top"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="top"
+            android:background="@drawable/gradient_list"
+            android:alpha="0"/>
     </FrameLayout>
 
 </LinearLayout>

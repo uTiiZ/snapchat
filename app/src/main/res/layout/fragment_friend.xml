@@ -39,13 +39,14 @@
         <com.utiiz.snapchat.view.TabLayoutIndicator
             android:layout_weight="0"
             android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             app:tabBackground = "@android:color/transparent"
             app:tabTextColor="@color/colorWhite"
             app:tabSelectedTextColor="@color/colorWhite"
             app:tabTextAppearance="@style/mTabLayout"
             app:tabGravity="center"
+            android:layout_gravity="center|top"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed"/>
 
@@ -74,12 +75,26 @@
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/shape_recycler_view">
+                        android:background="@drawable/shape_recycler_view"
+                        android:paddingBottom="100dp">
                     </android.support.v7.widget.RecyclerView>
                 </FrameLayout>
 
         </android.support.v4.widget.NestedScrollView>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradient_friend"/>
+
+        <View
+            android:id="@+id/gradient_top"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="top"
+            android:background="@drawable/gradient_list"
+            android:alpha="0"/>
     </FrameLayout>
 
 </LinearLayout>

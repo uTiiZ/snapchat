@@ -5,7 +5,8 @@ import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 
-import com.utiiz.snapchat.adapter.ChatAdapter;
+import com.utiiz.snapchat.adapter.DiscoverAdapter;
+import com.utiiz.snapchat.adapter.FriendAdapter;
 import com.utiiz.snapchat.interfaces.DiscoverInterface;
 import com.utiiz.snapchat.interfaces.FriendInterface;
 import com.utiiz.snapchat.model.Chat;
@@ -74,7 +75,7 @@ public class Snapchat {
         return value;
     }
 
-    public static void refreshDiscover(int position, RecyclerView mRecyclerView, ChatAdapter chatAdapter, Integer[] COLORS) {
+    public static void refreshDiscover(int position, RecyclerView mRecyclerView, DiscoverAdapter discoverAdapter, Integer[] COLORS) {
         List<Chat> newChatList = new ArrayList<>();
 
         switch (position) {
@@ -90,12 +91,12 @@ public class Snapchat {
                 break;
         }
 
-        chatAdapter.update(newChatList);
-        mRecyclerView.setAdapter(chatAdapter);
+        discoverAdapter.update(newChatList);
+        mRecyclerView.setAdapter(discoverAdapter);
         mRecyclerView.setLayoutFrozen(true);
     }
 
-    public static void refreshFriends(int position, RecyclerView mRecyclerView, ChatAdapter chatAdapter) {
+    public static void refreshFriends(int position, RecyclerView mRecyclerView, FriendAdapter friendAdapter) {
         List<Chat> newChatList = new ArrayList<>();
 
         for (int i = 0; i < 15; i++) {
@@ -112,8 +113,8 @@ public class Snapchat {
             }
         }
 
-        chatAdapter.update(newChatList);
-        mRecyclerView.setAdapter(chatAdapter);
+        friendAdapter.update(newChatList);
+        mRecyclerView.setAdapter(friendAdapter);
         mRecyclerView.setLayoutFrozen(true);
     }
 }

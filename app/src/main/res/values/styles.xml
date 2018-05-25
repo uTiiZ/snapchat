@@ -9,10 +9,10 @@
     </style>
 
     <style name="mTabLayout" parent="">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">0.07</item>
+        <item name="android:letterSpacing">0.03</item>
     </style>
 
 </resources>

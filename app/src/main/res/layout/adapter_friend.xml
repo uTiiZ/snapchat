@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:layout_weight="0"
+                android:layout_width="72dp"
+                android:layout_height="72dp">
+                <RelativeLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:gravity="center"
+                    android:padding="10dp">
+                    <ImageView
+                        android:id="@+id/stories"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_stories_blue"
+                        android:padding="4dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:gravity="center"
+                    android:padding="25dp">
+                    <View
+                        android:id="@+id/see_again"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_see_again"/>
+                </RelativeLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Username"
+                    android:textColor="#434A54"
+                    android:textSize="17dp"
+                    android:gravity="bottom"/>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_weight="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/info"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Status • time"
+                        android:textColor="#AEB6BD"
+                        android:textSize="13dp"
+                        android:gravity="top"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_weight="0"
+                android:layout_width="36dp"
+                android:layout_height="72dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/icon_friend"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="8dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F7F8F9"
+            android:layout_gravity="bottom"/>
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

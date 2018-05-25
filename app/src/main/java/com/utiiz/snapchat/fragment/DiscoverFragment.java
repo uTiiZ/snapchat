@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
@@ -16,17 +15,17 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.utiiz.snapchat.R;
-import com.utiiz.snapchat.adapter.ChatAdapter;
+import com.utiiz.snapchat.adapter.DiscoverAdapter;
 import com.utiiz.snapchat.adapter.FragmentAdapter;
 import com.utiiz.snapchat.adapter.NestedScrollViewOverScrollDecorAdapter;
 import com.utiiz.snapchat.helper.Snapchat;
 import com.utiiz.snapchat.interfaces.DiscoverInterface;
+import com.utiiz.snapchat.interfaces.SnapchatInterface;
 import com.utiiz.snapchat.model.Chat;
+import com.utiiz.snapchat.view.LineIndicator;
 import com.utiiz.snapchat.view.TabLayoutIndicator;
-import com.utiiz.snapchat.view.TriangleIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +54,7 @@ public class DiscoverFragment extends Fragment {
     @NonNull @BindView(R.id.snap) public View mSnap;
     @NonNull @BindView(R.id.hands) public View mHands;
     @NonNull @BindView(R.id.rainbow) public View mRainbow;
+    @NonNull @BindView(R.id.gradient_top) public View mGradient;
 
     Integer[] COLORS = null;
 
@@ -63,13 +63,19 @@ public class DiscoverFragment extends Fragment {
                              Bundle savedInstanceState) {
         mLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_discover, container, false);
         ButterKnife.bind(this, mLinearLayout);
+        mLinearLayout.setTag(SnapchatInterface.DISCOVER_PAGE_INDEX);
 
         COLORS = new Integer[] {getContext().getColor(R.color.colorPrimaryBlue), getContext().getColor(R.color.colorPrimaryRed)};
 
-        TriangleIndicator triangleIndicator = new TriangleIndicator(mTabLayout);
+        /*TriangleIndicator triangleIndicator = new TriangleIndicator(mTabLayout);
         triangleIndicator.setContext(getContext());
 
-        mTabLayout.setAnimatedIndicator(triangleIndicator);
+        mTabLayout.setAnimatedIndicator(triangleIndicator);*/
+        LineIndicator lineIndicator = new LineIndicator(mTabLayout);
+        lineIndicator.setContext(getContext());
+
+        mTabLayout.setAnimatedIndicator(lineIndicator);
+        mTabLayout.setSelectedTabIndicatorHeight((int) Snapchat.DPToPixel(2.0F, getContext()));
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabTextColors(Color.parseColor("#BBFFFFFF"), Color.parseColor("#FFFFFFFF"));
 
@@ -110,8 +116,8 @@ public class DiscoverFragment extends Fragment {
             chatList.add(new Chat("All", (i == 0 || i == 2 || i == 4 || i == 6) ? 250 : 300, COLORS[new Random().nextInt(COLORS.length)]));
         }
 
-        final ChatAdapter chatAdapter = new ChatAdapter(chatList);
-        mRecyclerView.setAdapter(chatAdapter);
+        final DiscoverAdapter discoverAdapter = new DiscoverAdapter(chatList);
+        mRecyclerView.setAdapter(discoverAdapter);
         mRecyclerView.setLayoutFrozen(true);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -228,7 +234,7 @@ public class DiscoverFragment extends Fragment {
                                     .setInterpolator(new DecelerateInterpolator())
                                     .start();
                             canBounceBack[0] = false;
-                            Snapchat.refreshDiscover(mViewPager.getCurrentItem(), mRecyclerView, chatAdapter, COLORS);
+                            Snapchat.refreshDiscover(mViewPager.getCurrentItem(), mRecyclerView, discoverAdapter, COLORS);
                         }
 
                         break;
@@ -244,12 +250,21 @@ public class DiscoverFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                Snapchat.refreshDiscover(position, mRecyclerView, chatAdapter, COLORS);
+                Snapchat.refreshDiscover(position, mRecyclerView, discoverAdapter, COLORS);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+        mNestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                float alpha = (1.0F * scrollY) / (1.0F * v.getPaddingTop());
+
+                mGradient.setAlpha(scrollY == 0 ? 0 : alpha);
             }
         });
 

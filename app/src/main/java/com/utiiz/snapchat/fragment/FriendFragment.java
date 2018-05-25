@@ -1,5 +1,6 @@
 package com.utiiz.snapchat.fragment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,20 +12,26 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.utiiz.snapchat.R;
-import com.utiiz.snapchat.adapter.ChatAdapter;
+import com.utiiz.snapchat.adapter.DiscoverAdapter;
 import com.utiiz.snapchat.adapter.FragmentAdapter;
+import com.utiiz.snapchat.adapter.FriendAdapter;
 import com.utiiz.snapchat.adapter.NestedScrollViewOverScrollDecorAdapter;
 import com.utiiz.snapchat.helper.Snapchat;
 import com.utiiz.snapchat.interfaces.FriendInterface;
+import com.utiiz.snapchat.interfaces.SnapchatInterface;
 import com.utiiz.snapchat.model.Chat;
 import com.utiiz.snapchat.view.LineIndicator;
 import com.utiiz.snapchat.view.TabLayoutIndicator;
@@ -34,7 +41,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.didik.component.StickyNestedScrollView;
 import me.everything.android.ui.overscroll.IOverScrollDecor;
 import me.everything.android.ui.overscroll.IOverScrollUpdateListener;
 import me.everything.android.ui.overscroll.VerticalOverScrollBounceEffectDecorator;
@@ -56,24 +62,22 @@ public class FriendFragment extends Fragment {
     @NonNull @BindView(R.id.snap) public View mSnap;
     @NonNull @BindView(R.id.hands) public View mHands;
     @NonNull @BindView(R.id.rainbow) public View mRainbow;
+    @NonNull @BindView(R.id.gradient_top) public View mGradient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_friend, container, false);
         ButterKnife.bind(this, mLinearLayout);
+        mLinearLayout.setTag(SnapchatInterface.FRIEND_PAGE_INDEX);
 
         LineIndicator lineIndicator = new LineIndicator(mTabLayout);
         lineIndicator.setContext(getContext());
 
         mTabLayout.setAnimatedIndicator(lineIndicator);
+        mTabLayout.setSelectedTabIndicatorHeight((int) Snapchat.DPToPixel(2.0F, getContext()));
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabTextColors(Color.parseColor("#BBFFFFFF"), Color.parseColor("#FFFFFFFF"));
-
-        TypedValue tv = new TypedValue();
-        int actionBarHeight = 0;
-        if (getActivity().getTheme().resolveAttribute(R.attr.actionBarSize, tv, true))
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
 
         final ViewTreeObserver observer = mTabLayout.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -120,8 +124,8 @@ public class FriendFragment extends Fragment {
         chatList.add(new Chat("Chat"));
         chatList.add(new Chat("Chat"));
 
-        final ChatAdapter chatAdapter = new ChatAdapter(chatList);
-        mRecyclerView.setAdapter(chatAdapter);
+        final FriendAdapter friendAdapter = new FriendAdapter(chatList);
+        mRecyclerView.setAdapter(friendAdapter);
         mRecyclerView.setLayoutFrozen(true);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -240,7 +244,7 @@ public class FriendFragment extends Fragment {
                                     .setInterpolator(new DecelerateInterpolator())
                                     .start();
                             canBounceBack[0] = false;
-                            Snapchat.refreshFriends(mViewPager.getCurrentItem(), mRecyclerView, chatAdapter);
+                            Snapchat.refreshFriends(mViewPager.getCurrentItem(), mRecyclerView, friendAdapter);
                         }
 
                         break;
@@ -256,7 +260,7 @@ public class FriendFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                Snapchat.refreshFriends(position, mRecyclerView, chatAdapter);
+                Snapchat.refreshFriends(position, mRecyclerView, friendAdapter);
             }
 
             @Override
@@ -264,9 +268,43 @@ public class FriendFragment extends Fragment {
 
             }
         });
+
+        mNestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                float alpha = (1.0F * scrollY) / (1.0F * v.getPaddingTop());
+
+                mGradient.setAlpha(scrollY == 0 ? 0 : alpha);
+            }
+        });
+
+        init(getContext());
+
         return mLinearLayout;
     }
 
+    private void init(Context context) {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url ="http://192.168.56.1:3000/tickets";
 
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Log.i("INIT", response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("INIT", error.getLocalizedMessage() + " - " + error.getMessage());
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
 
 }

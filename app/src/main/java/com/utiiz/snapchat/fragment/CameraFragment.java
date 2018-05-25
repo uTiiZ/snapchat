@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.utiiz.snapchat.R;
+import com.utiiz.snapchat.interfaces.SnapchatInterface;
 
 import butterknife.ButterKnife;
 
@@ -20,6 +21,7 @@ public class CameraFragment extends Fragment {
                              Bundle savedInstanceState) {
         mLinearLayout = (LinearLayout) inflater.inflate(R.layout.fragment_camera, container, false);
         ButterKnife.bind(this, mLinearLayout);
+        mLinearLayout.setTag(SnapchatInterface.CAMERA_PAGE_INDEX);
 
         //mNestedScrollView.setPadding(0, mNestedScrollView.getPaddingTop() + Snapchat.getStatusBarHeight(getContext()), 0, 0);
 
