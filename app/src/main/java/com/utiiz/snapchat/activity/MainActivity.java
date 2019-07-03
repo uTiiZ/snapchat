@@ -132,11 +132,15 @@ public class MainActivity extends AppCompatActivity {
         //requestOptions.transform(new RoundedCornersTransformation((int) Snapchat.DPToPixel(5.0F, context), 0));
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(actionBarHeight));
 
-        int drawableResourceId = this.getResources().getIdentifier("melanie", "drawable", this.getPackageName());
+        /*int drawableResourceId = this.getResources().getIdentifier("melanie", "drawable", this.getPackageName());
 
         Glide.with(getApplicationContext())
                 .setDefaultRequestOptions(requestOptions)
                 .load(drawableResourceId)
+                .into(ivMyStories);*/
+        Glide.with(getApplicationContext())
+                .setDefaultRequestOptions(requestOptions)
+                .load("https://picsum.photos/200/300/?image=73")
                 .into(ivMyStories);
 
         requestOptions = new RequestOptions();
@@ -144,9 +148,14 @@ public class MainActivity extends AppCompatActivity {
         //requestOptions.transform(new RoundedCornersTransformation((int) Snapchat.DPToPixel(5.0F, context), 0));
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners((int) Snapchat.DPToPixel(1.0F, getApplicationContext())));
 
-        Glide.with(getApplicationContext())
+        /*Glide.with(getApplicationContext())
                 .setDefaultRequestOptions(requestOptions)
                 .load(drawableResourceId)
+                .into(ivLastMemory);*/
+
+        Glide.with(getApplicationContext())
+                .setDefaultRequestOptions(requestOptions)
+                .load("https://picsum.photos/200/300/?image=73")
                 .into(ivLastMemory);
 
         vFlash.setTag(false);

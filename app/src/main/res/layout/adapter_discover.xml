@@ -50,14 +50,15 @@
                     android:textColor="@color/colorWhite"
                     android:includeFontPadding="false"
                     android:textSize="10dp"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Marc Fitt"
-                    android:textStyle="bold"
-                    android:textSize="20dp"
                     android:includeFontPadding="false"
-                    android:textColor="@color/colorWhite"/>
+                    android:text="username"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

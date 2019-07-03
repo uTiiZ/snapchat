@@ -83,7 +83,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
 
         Glide.with(context)
                 .setDefaultRequestOptions(requestOptions)
-                .load("https://picsum.photos/200/300/?image=" + new Random().nextInt(1084 + 1))
+                .load("https://picsum.photos/200/300/?image=" + new Random().nextInt(100 + 1))
                 .into(holder.ivBackground);
 
         Glide.with(context)

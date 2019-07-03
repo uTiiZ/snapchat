@@ -81,7 +81,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
 
             Glide.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load("https://picsum.photos/200/300/?image=" + new Random().nextInt(1084 + 1))
+                    .load("https://picsum.photos/200/300/?image=" + new Random().nextInt(100 + 1))
                     .into(holder.vStories);
 
             holder.vStories.setBackground(null);
@@ -93,13 +93,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
 
             Glide.with(context)
                     .setDefaultRequestOptions(requestOptions)
-                    .load("https://picsum.photos/200/300/?image=" + new Random().nextInt(1084 + 1))
+                    .load("https://picsum.photos/200/300/?image=" + new Random().nextInt(100 + 1))
                     .into(holder.vStories);
         }
 
         Glide.with(context)
                 .setDefaultRequestOptions(requestOptions)
-                .load("https://picsum.photos/200/300/?image=" + new Random().nextInt(1084 + 1))
+                .load("https://picsum.photos/200/300/?image=" + new Random().nextInt(100 + 1))
                 .into(holder.vStories);
 
         requestOptions = new RequestOptions();
